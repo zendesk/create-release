@@ -1,11 +1,11 @@
 const core = require('@actions/core');
-const { GitHub, context } = require('@actions/github');
+const { getOctokit, context } = require('@actions/github');
 const fs = require('fs');
 
 async function run() {
   try {
-    // Get authenticated GitHub client (Ocktokit): https://github.com/actions/toolkit/tree/master/packages/github#usage
-    const github = new GitHub(process.env.GITHUB_TOKEN);
+    // Get authenticated GitHub client (Octokit): https://github.com/actions/toolkit/tree/master/packages/github#usage
+    const github = getOctokit(process.env.GITHUB_TOKEN);
 
     // Get owner and repo from context of payload that triggered the action
     const { owner: currentOwner, repo: currentRepo } = context.repo;
@@ -36,7 +36,7 @@ async function run() {
     // Create a release
     // API Documentation: https://developer.github.com/v3/repos/releases/#create-a-release
     // Octokit Documentation: https://octokit.github.io/rest.js/#octokit-routes-repos-create-release
-    const createReleaseResponse = await github.repos.createRelease({
+    const createReleaseResponse = await github.rest.repos.createRelease({
       owner,
       repo,
       tag_name: tag,
