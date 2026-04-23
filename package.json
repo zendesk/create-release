@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint \"src/**.js\" \"tests/**.js\" --fix",
     "test": "eslint \"src/**.js\" \"tests/**.js\" && jest --coverage",
-    "build": "ncc build src/main.js",
+    "test:debug": "node --inspect-brk node_modules/.bin/jest --runInBand",
+    "build": "node node_modules/@vercel/ncc/dist/ncc/cli.js build src/main.js -o dist",
     "precommit": "npm run build && git add dist/"
   },
   "repository": {
@@ -20,22 +21,25 @@
   "author": "GitHub",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.0.0",
-    "@actions/exec": "^1.0.0",
-    "@actions/github": "^2.2.0"
+    "@actions/core": "^1.11.1",
+    "@actions/exec": "^1.1.1",
+    "@actions/github": "^8.0.1"
+  },
+  "overrides": {
+    "@actions/http-client": "^3.0.2"
   },
   "devDependencies": {
-    "@zeit/ncc": "^0.20.4",
-    "eslint": "^5.13.0",
+    "@vercel/ncc": "^0.38.4",
+    "eslint": "^10.2.1",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.6.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^2.7.0",
     "eslint-plugin-react": "^7.12.4",
-    "jest": "^24.8.0",
-    "prettier": "^1.16.4",
-    "husky": "^3.0.5"
+    "husky": "^3.0.5",
+    "jest": "^30.3.0",
+    "prettier": "^1.16.4"
   },
   "jest": {
     "testEnvironment": "node",
